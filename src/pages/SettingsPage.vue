@@ -1,53 +1,22 @@
 <template>
-  <div class="space-y-6">
+  <div class="space-y-4">
     <!-- 页面标题 -->
-    <div class="text-center">
-      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">设置</h2>
-      <p class="text-gray-600 dark:text-gray-300 text-sm">管理您的账户和应用偏好</p>
-    </div>
-    
-    <!-- 用户信息 -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
-      <h3 class="font-semibold text-gray-900 dark:text-white mb-4">用户信息</h3>
+    <div class="relative text-center">
+      <!-- 返回按钮 -->
+      <button
+        @click="goBack"
+        class="absolute left-0 top-0 p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+      >
+        <ArrowLeft :size="20" />
+      </button>
       
-      <div v-if="!authStore.isAuthenticated" class="text-center py-8">
-        <div class="text-4xl mb-2">👤</div>
-        <p class="text-gray-500 dark:text-gray-400 mb-4">请先登录以查看用户信息</p>
-        <router-link
-          to="/login"
-          class="inline-block bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
-        >
-          立即登录
-        </router-link>
-      </div>
-      
-      <div v-else class="space-y-4">
-        <div class="flex items-center space-x-4">
-          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-            <User :size="24" class="text-green-600" />
-          </div>
-          <div>
-            <div class="font-medium text-gray-900 dark:text-white">{{ authStore.user?.email || '用户' }}</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">记个大概用户</div>
-          </div>
-        </div>
-        
-        <div class="grid grid-cols-2 gap-4 pt-4">
-          <div class="text-center p-3 bg-blue-50 rounded-lg">
-            <div class="text-lg font-bold text-blue-600">{{ totalExpenses }}</div>
-            <div class="text-xs text-blue-500">总记录数</div>
-          </div>
-          <div class="text-center p-3 bg-green-50 rounded-lg">
-            <div class="text-lg font-bold text-green-600">{{ daysSinceJoin }}</div>
-            <div class="text-xs text-green-500">使用天数</div>
-          </div>
-        </div>
-      </div>
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">设置</h2>
+      <p class="text-gray-600 dark:text-gray-300 text-xs">管理您的应用偏好</p>
     </div>
     
     <!-- 分类管理 -->
     <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
-      <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center justify-between mb-3">
         <h3 class="font-semibold text-gray-900 dark:text-white">分类管理</h3>
         <button
           @click="showAddCategory = true"
@@ -83,34 +52,11 @@
       </div>
     </div>
     
-    <!-- 固定支出管理 -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
-      <h3 class="font-semibold text-gray-900 dark:text-white mb-4">固定支出管理</h3>
-      
-      <div class="space-y-3">
-        <router-link
-          to="/recurring-expenses"
-          class="w-full flex items-center justify-between bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-700 dark:text-blue-300 py-3 px-4 rounded-lg transition-colors"
-        >
-          <div class="flex items-center space-x-3">
-            <span class="text-xl">🔄</span>
-            <div>
-              <div class="font-medium">管理固定支出</div>
-              <div class="text-sm opacity-75">房租、电费等定期支出</div>
-            </div>
-          </div>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </router-link>
-      </div>
-    </div>
-    
     <!-- 数据管理 -->
     <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
-      <h3 class="font-semibold text-gray-900 dark:text-white mb-4">数据管理</h3>
+      <h3 class="font-semibold text-gray-900 dark:text-white mb-3">数据管理</h3>
       
-      <div class="space-y-3">
+      <div class="space-y-2">
         <button
           @click="exportData"
           :disabled="exporting"
@@ -132,9 +78,9 @@
     
     <!-- 应用设置 -->
     <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
-      <h3 class="font-semibold text-gray-900 dark:text-white mb-4">应用设置</h3>
+      <h3 class="font-semibold text-gray-900 dark:text-white mb-3">应用设置</h3>
       
-      <div class="space-y-4">
+      <div class="space-y-3">
         <!-- 主题设置 -->
         <div class="flex items-center justify-between">
           <div>
@@ -189,43 +135,6 @@
           </button>
         </div>
       </div>
-    </div>
-    
-    <!-- 关于应用 -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
-      <h3 class="font-semibold text-gray-900 dark:text-white mb-4">关于应用</h3>
-      
-      <div class="space-y-3 text-sm text-gray-600 dark:text-gray-300">
-        <div class="flex justify-between">
-          <span>应用版本</span>
-          <span>1.0.0</span>
-        </div>
-        <div class="flex justify-between">
-          <span>开发者</span>
-          <span>邱少</span>
-        </div>
-        <div class="flex justify-between">
-          <span>技术支持</span>
-          <span>qiushaotest@qq.com</span>
-        </div>
-      </div>
-      
-      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-600">
-        <p class="text-xs text-gray-500 dark:text-gray-400 text-center">
-          © 2024 记个大概. 保留所有权利.
-        </p>
-      </div>
-    </div>
-    
-    <!-- 退出登录 -->
-    <div v-if="authStore.isAuthenticated" class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
-      <button
-        @click="logout"
-        class="w-full flex items-center justify-center space-x-2 bg-red-50 hover:bg-red-100 text-red-700 py-3 px-4 rounded-lg transition-colors"
-      >
-        <LogOut :size="18" />
-        <span>退出登录</span>
-      </button>
     </div>
     
     <!-- 添加分类弹窗 -->
@@ -293,15 +202,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { User, Trash2, Download, LogOut } from 'lucide-vue-next'
-import { useAuthStore, useExpenseStore, useCategoryStore, useBudgetStore } from '@/stores'
+import { Trash2, Download, ArrowLeft } from 'lucide-vue-next'
+import { useExpenseStore, useCategoryStore, useBudgetStore } from '@/stores'
 import { useTheme } from '@/composables/useTheme'
 import { toast } from 'vue-sonner'
 
 const router = useRouter()
-const authStore = useAuthStore()
+
 const expenseStore = useExpenseStore()
 const categoryStore = useCategoryStore()
 const budgetStore = useBudgetStore()
@@ -327,17 +236,6 @@ const predefinedColors = [
   '#9C27B0', '#607D8B', '#795548', '#E91E63',
   '#3F51B5', '#009688', '#CDDC39', '#FF5722'
 ]
-
-// 统计数据
-const totalExpenses = computed(() => expenseStore.expenses.length)
-
-const daysSinceJoin = computed(() => {
-  if (!authStore.user?.created_at) return 0
-  const joinDate = new Date(authStore.user.created_at)
-  const now = new Date()
-  const diffTime = Math.abs(now.getTime() - joinDate.getTime())
-  return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-})
 
 // 切换语音记账
 function toggleVoiceRecording() {
@@ -449,16 +347,9 @@ async function clearAllData() {
   }
 }
 
-// 退出登录
-async function logout() {
-  try {
-    await authStore.logout()
-    toast.success('已退出登录')
-    router.push('/login')
-  } catch (error) {
-    console.error('退出登录失败:', error)
-    toast.error('退出失败，请重试')
-  }
+// 返回上一页
+function goBack() {
+  router.push('/profile')
 }
 
 // 初始化

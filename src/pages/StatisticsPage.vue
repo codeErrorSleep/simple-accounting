@@ -303,7 +303,24 @@ function getCategoryColor(categoryId: string): string {
 
 // 创建饼图
 function createPieChart() {
-  if (!pieChartRef.value || categoryData.value.length === 0) return
+  if (!pieChartRef.value) {
+    console.log('饼图canvas元素未找到')
+    return
+  }
+  
+  if (categoryData.value.length === 0) {
+    console.log('没有分类数据，显示空状态')
+    // 显示空状态
+    const ctx = pieChartRef.value.getContext('2d')
+    if (ctx) {
+      ctx.clearRect(0, 0, pieChartRef.value.width, pieChartRef.value.height)
+      ctx.fillStyle = '#666'
+      ctx.font = '14px Arial'
+      ctx.textAlign = 'center'
+      ctx.fillText('暂无数据', pieChartRef.value.width / 2, pieChartRef.value.height / 2)
+    }
+    return
+  }
   
   if (pieChart) {
     pieChart.destroy()
@@ -312,35 +329,79 @@ function createPieChart() {
   const ctx = pieChartRef.value.getContext('2d')
   if (!ctx) return
   
-  pieChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: categoryData.value.map(item => item.label),
-      datasets: [{
-        data: categoryData.value.map(item => item.value),
-        backgroundColor: categoryData.value.map(item => item.color),
-        borderWidth: 0
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: {
-            padding: 20,
-            usePointStyle: true
+  try {
+    pieChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: categoryData.value.map(item => item.label),
+        datasets: [{
+          data: categoryData.value.map(item => item.value),
+          backgroundColor: categoryData.value.map(item => item.color),
+          borderWidth: 2,
+          borderColor: '#fff',
+          hoverBorderWidth: 3,
+          hoverBorderColor: '#fff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              pointStyle: 'circle',
+              font: {
+                size: 12
+              }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const label = context.label || ''
+                const value = context.parsed
+                const total = context.dataset.data.reduce((a, b) => a + b, 0)
+                const percentage = ((value / total) * 100).toFixed(1)
+                return `${label}: ¥${value.toFixed(2)} (${percentage}%)`
+              }
+            }
           }
+        },
+        animation: {
+          animateRotate: true,
+          duration: 1000
         }
       }
-    }
-  })
+    })
+    console.log('饼图创建成功，数据条数:', categoryData.value.length)
+  } catch (error) {
+    console.error('创建饼图失败:', error)
+  }
 }
 
 // 创建趋势图
 function createLineChart() {
-  if (!lineChartRef.value || trendData.value.length === 0) return
+  if (!lineChartRef.value) {
+    console.log('趋势图canvas元素未找到')
+    return
+  }
+  
+  if (trendData.value.length === 0) {
+    console.log('没有趋势数据，显示空状态')
+    // 显示空状态
+    const ctx = lineChartRef.value.getContext('2d')
+    if (ctx) {
+      ctx.clearRect(0, 0, lineChartRef.value.width, lineChartRef.value.height)
+      ctx.fillStyle = '#666'
+      ctx.font = '14px Arial'
+      ctx.textAlign = 'center'
+      ctx.fillText('暂无数据', lineChartRef.value.width / 2, lineChartRef.value.height / 2)
+    }
+    return
+  }
   
   if (lineChart) {
     lineChart.destroy()
@@ -349,49 +410,105 @@ function createLineChart() {
   const ctx = lineChartRef.value.getContext('2d')
   if (!ctx) return
   
-  lineChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: trendData.value.map(item => formatDate(item.date)),
-      datasets: [{
-        label: '支出金额',
-        data: trendData.value.map(item => item.amount),
-        borderColor: '#4CAF50',
-        backgroundColor: 'rgba(76, 175, 80, 0.1)',
-        fill: true,
-        tension: 0.4
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false
-        }
+  try {
+    lineChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: trendData.value.map(item => formatDate(item.date)),
+        datasets: [{
+          label: '支出金额',
+          data: trendData.value.map(item => item.amount),
+          borderColor: '#4CAF50',
+          backgroundColor: 'rgba(76, 175, 80, 0.1)',
+          fill: true,
+          tension: 0.4,
+          pointBackgroundColor: '#4CAF50',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointRadius: 4,
+          pointHoverRadius: 6,
+          pointHoverBackgroundColor: '#4CAF50',
+          pointHoverBorderColor: '#fff',
+          pointHoverBorderWidth: 2
+        }]
       },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            callback: function(value) {
-              return '¥' + value
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+              label: function(context) {
+                return `支出: ¥${context.parsed.y.toFixed(2)}`
+              }
             }
           }
+        },
+        scales: {
+          x: {
+            grid: {
+              color: 'rgba(0, 0, 0, 0.1)'
+            },
+            ticks: {
+              font: {
+                size: 11
+              }
+            }
+          },
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: 'rgba(0, 0, 0, 0.1)'
+            },
+            ticks: {
+              font: {
+                size: 11
+              },
+              callback: function(value) {
+                 return '¥' + Number(value).toFixed(0)
+               }
+            }
+          }
+        },
+        interaction: {
+          mode: 'nearest',
+          axis: 'x',
+          intersect: false
+        },
+        animation: {
+          duration: 1000,
+          easing: 'easeInOutQuart'
         }
       }
-    }
-  })
+    })
+    console.log('趋势图创建成功，数据点数:', trendData.value.length)
+  } catch (error) {
+    console.error('创建趋势图失败:', error)
+  }
 }
 
 // 更新数据
 async function updateData() {
   loading.value = true
   try {
+    console.log('开始更新数据...')
     await expenseStore.fetchExpenses()
+    console.log('支出数据获取完成，条数:', expenseStore.expenses.length)
+    
     await nextTick()
-    createPieChart()
-    createLineChart()
+    
+    // 延迟一下确保DOM完全渲染
+    setTimeout(() => {
+      createPieChart()
+      createLineChart()
+    }, 100)
+  } catch (error) {
+    console.error('更新数据失败:', error)
   } finally {
     loading.value = false
   }
@@ -399,15 +516,41 @@ async function updateData() {
 
 // 监听数据变化
 watch([categoryData, trendData], () => {
+  console.log('数据变化，重新创建图表')
+  console.log('分类数据:', categoryData.value.length, '趋势数据:', trendData.value.length)
+  
   nextTick(() => {
-    createPieChart()
-    createLineChart()
+    setTimeout(() => {
+      createPieChart()
+      createLineChart()
+    }, 50)
+  })
+}, { deep: true })
+
+// 监听时间范围变化
+watch(selectedPeriod, () => {
+  console.log('时间范围变化:', selectedPeriod.value)
+  nextTick(() => {
+    setTimeout(() => {
+      createPieChart()
+      createLineChart()
+    }, 50)
   })
 })
 
 // 初始化
 onMounted(async () => {
-  await categoryStore.fetchCategories()
-  await updateData()
+  console.log('统计页面初始化...')
+  
+  try {
+    await categoryStore.fetchCategories()
+    console.log('分类数据获取完成，条数:', categoryStore.categories.length)
+    
+    await updateData()
+    
+    console.log('统计页面初始化完成')
+  } catch (error) {
+    console.error('统计页面初始化失败:', error)
+  }
 })
 </script>

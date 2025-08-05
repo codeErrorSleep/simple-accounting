@@ -240,6 +240,94 @@ export const useExpenseStore = defineStore('expense', () => {
       .reduce((sum, expense) => sum + expense.amount, 0)
   })
 
+  // 初始化测试数据
+  const initTestData = () => {
+    const authStore = useAuthStore()
+    
+    // 只在游客模式下添加测试数据
+    if (!authStore.isGuestMode()) return
+    
+    // 检查是否已有测试数据
+    const existingData = JSON.parse(localStorage.getItem('guestExpenses') || '[]')
+    if (existingData.length > 0) return
+    
+    // 生成过去30天的测试数据
+    const testExpenses = []
+    const categories = ['1', '2', '3', '4', '5', '6', '7', '8'] // 对应默认分类ID
+    const descriptions = {
+      '1': ['午餐', '晚餐', '早餐', '下午茶', '夜宵'],
+      '2': ['地铁', '公交', '打车', '加油', '停车费'],
+      '3': ['衣服', '鞋子', '日用品', '电子产品', '书籍'],
+      '4': ['电影', '游戏', 'KTV', '旅游', '健身'],
+      '5': ['药品', '体检', '看病', '保健品', '医疗器械'],
+      '6': ['培训', '书籍', '课程', '考试费', '学习用品'],
+      '7': ['房租', '水电费', '物业费', '网费', '维修费'],
+      '8': ['礼品', '捐款', '其他费用', '杂费', '意外支出']
+    }
+    
+    for (let i = 0; i < 30; i++) {
+      const date = new Date()
+      date.setDate(date.getDate() - i)
+      const dateStr = date.toISOString().split('T')[0]
+      
+      // 每天随机生成1-3笔支出
+      const dailyCount = Math.floor(Math.random() * 3) + 1
+      
+      for (let j = 0; j < dailyCount; j++) {
+        const categoryId = categories[Math.floor(Math.random() * categories.length)]
+        const categoryDescriptions = descriptions[categoryId]
+        const description = categoryDescriptions[Math.floor(Math.random() * categoryDescriptions.length)]
+        
+        // 根据分类生成合理的金额范围
+        let amount
+        switch (categoryId) {
+          case '1': // 餐饮
+            amount = Math.floor(Math.random() * 80) + 20
+            break
+          case '2': // 交通
+            amount = Math.floor(Math.random() * 50) + 5
+            break
+          case '3': // 购物
+            amount = Math.floor(Math.random() * 300) + 50
+            break
+          case '4': // 娱乐
+            amount = Math.floor(Math.random() * 200) + 30
+            break
+          case '5': // 医疗
+            amount = Math.floor(Math.random() * 500) + 100
+            break
+          case '6': // 教育
+            amount = Math.floor(Math.random() * 1000) + 200
+            break
+          case '7': // 住房
+            amount = Math.floor(Math.random() * 2000) + 500
+            break
+          default: // 其他
+            amount = Math.floor(Math.random() * 100) + 10
+        }
+        
+        testExpenses.push({
+          id: crypto.randomUUID(),
+          user_id: 'guest',
+          category_id: categoryId,
+          amount: amount,
+          description: description,
+          expense_date: dateStr,
+          source: 'manual',
+          created_at: new Date().toISOString()
+        })
+      }
+    }
+    
+    // 保存测试数据到本地存储
+    localStorage.setItem('guestExpenses', JSON.stringify(testExpenses))
+    
+    // 更新当前状态
+    expenses.value = testExpenses.sort((a, b) => 
+      new Date(b.expense_date).getTime() - new Date(a.expense_date).getTime()
+    )
+  }
+
   return {
     expenses,
     loading,
@@ -250,6 +338,7 @@ export const useExpenseStore = defineStore('expense', () => {
     todayTotal,
     weekTotal,
     monthTotal,
+    initTestData,
   }
 })
 

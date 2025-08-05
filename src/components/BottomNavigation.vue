@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { Home, Plus, BarChart3, Target, Settings } from 'lucide-vue-next'
+import { Home, Plus, BarChart3, Target, User } from 'lucide-vue-next'
 
 const navItems = [
   {
@@ -64,10 +64,10 @@ const navItems = [
     icon: Target
   },
   {
-    name: 'settings',
-    path: '/settings',
-    label: '设置',
-    icon: Settings
+    name: 'profile',
+    path: '/profile',
+    label: '我的',
+    icon: User
   }
 ]
 </script>

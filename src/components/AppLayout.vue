@@ -42,13 +42,32 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useAuthStore } from '@/stores'
+import { useAuthStore, useExpenseStore, useCategoryStore } from '@/stores'
 import BottomNavigation from './BottomNavigation.vue'
 
 const route = useRoute()
 const authStore = useAuthStore()
+const expenseStore = useExpenseStore()
+const categoryStore = useCategoryStore()
+
+// 初始化应用数据
+onMounted(async () => {
+  // 初始化认证状态
+  await authStore.initAuth()
+  
+  // 初始化分类数据
+  await categoryStore.fetchCategories()
+  
+  // 如果是游客模式，初始化测试数据
+  if (authStore.isGuestMode()) {
+    expenseStore.initTestData()
+  }
+  
+  // 获取支出数据
+  await expenseStore.fetchExpenses()
+})
 
 // 页面标题映射
 const pageTitles: Record<string, string> = {

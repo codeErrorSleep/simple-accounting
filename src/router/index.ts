@@ -4,6 +4,7 @@ import HomePage from '@/pages/HomePage.vue'
 import RecordPage from '@/pages/RecordPage.vue'
 import StatisticsPage from '@/pages/StatisticsPage.vue'
 import BudgetPage from '@/pages/BudgetPage.vue'
+import ProfilePage from '@/pages/ProfilePage.vue'
 import SettingsPage from '@/pages/SettingsPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import RecurringExpensePage from '@/pages/RecurringExpensePage.vue'
@@ -29,6 +30,11 @@ const routes = [
     path: '/budget',
     name: 'budget',
     component: BudgetPage,
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfilePage,
   },
   {
     path: '/settings',
@@ -68,7 +74,7 @@ router.beforeEach(async (to, from, next) => {
   }
   
   // 需要认证的路由
-  const requiresAuth = ['home', 'record', 'statistics', 'budget', 'settings', 'recurring-expenses']
+  const requiresAuth = ['home', 'record', 'statistics', 'budget', 'profile', 'settings', 'recurring-expenses']
   
   if (requiresAuth.includes(to.name as string)) {
     if (!authStore.user) {

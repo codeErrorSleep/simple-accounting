@@ -1,16 +1,16 @@
 <template>
-  <div class="space-y-6">
+  <div class="space-y-4">
     <!-- 页面标题 -->
     <div class="text-center">
-      <h2 class="text-xl font-semibold text-gray-900 mb-2">手动记账</h2>
-      <p class="text-gray-600 text-sm">记录您的支出详情</p>
+      <h2 class="text-lg font-semibold text-gray-900 mb-1">手动记账</h2>
+      <p class="text-gray-600 text-xs">记录您的支出详情</p>
     </div>
     
     <!-- 记账表单 -->
-    <form @submit.prevent="handleSubmit" class="space-y-6">
+    <form @submit.prevent="handleSubmit" class="space-y-4">
       <!-- 金额输入 -->
-      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-        <label class="block text-sm font-medium text-gray-700 mb-3">支出金额</label>
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <label class="block text-sm font-medium text-gray-700 mb-2">支出金额</label>
         <div class="relative">
           <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">¥</span>
           <input
@@ -26,8 +26,8 @@
       </div>
       
       <!-- 分类选择 -->
-      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-        <label class="block text-sm font-medium text-gray-700 mb-3">支出分类</label>
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <label class="block text-sm font-medium text-gray-700 mb-2">支出分类</label>
         <div v-if="categoryStore.loading" class="grid grid-cols-3 gap-3">
           <div v-for="i in 6" :key="i" class="animate-pulse">
             <div class="h-16 bg-gray-200 rounded-lg"></div>
@@ -61,8 +61,8 @@
       </div>
       
       <!-- 描述输入 -->
-      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-        <label class="block text-sm font-medium text-gray-700 mb-3">支出描述</label>
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <label class="block text-sm font-medium text-gray-700 mb-2">支出描述</label>
         <input
           v-model="form.description"
           type="text"
@@ -72,8 +72,8 @@
       </div>
       
       <!-- 日期选择 -->
-      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-        <label class="block text-sm font-medium text-gray-700 mb-3">支出日期</label>
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <label class="block text-sm font-medium text-gray-700 mb-2">支出日期</label>
         <input
           v-model="form.expense_date"
           type="date"
@@ -83,14 +83,14 @@
       </div>
       
       <!-- 提交按钮 -->
-      <div class="space-y-3">
+      <div class="space-y-2">
         <button
           type="submit"
           :disabled="!isFormValid || submitting"
-          class="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium py-4 rounded-lg transition-colors"
+          class="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors"
         >
           <span v-if="submitting" class="flex items-center justify-center">
-            <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
             保存中...
           </span>
           <span v-else>保存记录</span>
@@ -99,7 +99,7 @@
         <button
           type="button"
           @click="resetForm"
-          class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 rounded-lg transition-colors"
+          class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 rounded-lg transition-colors"
         >
           重置表单
         </button>
