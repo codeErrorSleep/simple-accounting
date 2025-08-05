@@ -1,14 +1,19 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
     <!-- 顶部导航栏 -->
-    <header class="bg-white shadow-sm border-b border-gray-200 px-4 py-3 fixed top-0 left-0 right-0 z-40">
+    <header class="bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20 px-4 py-4 fixed top-0 left-0 right-0 z-40">
       <div class="flex items-center justify-between max-w-md mx-auto">
-        <h1 class="text-lg font-semibold text-gray-900">{{ pageTitle }}</h1>
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+            <span class="text-white text-sm font-bold">记</span>
+          </div>
+          <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{{ pageTitle }}</h1>
+        </div>
+        <div class="flex items-center space-x-3">
           <!-- 用户头像或登录按钮 -->
           <div v-if="authStore.isAuthenticated" class="flex items-center space-x-2">
-            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-              <span class="text-white text-sm font-medium">
+            <div class="w-9 h-9 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg ring-2 ring-white/50">
+              <span class="text-white text-sm font-bold">
                 {{ userInitial }}
               </span>
             </div>
@@ -16,7 +21,7 @@
           <router-link
             v-else
             to="/login"
-            class="text-green-600 hover:text-green-700 font-medium text-sm"
+            class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold text-sm px-4 py-2 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105"
           >
             登录
           </router-link>
@@ -25,8 +30,8 @@
     </header>
 
     <!-- 主要内容区域 -->
-    <main class="pt-16 pb-20 px-4">
-      <div class="max-w-md mx-auto">
+    <main class="pt-20 pb-24 px-4">
+      <div class="max-w-md mx-auto animate-fade-in-up">
         <slot />
       </div>
     </main>

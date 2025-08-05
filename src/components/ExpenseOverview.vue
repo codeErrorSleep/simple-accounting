@@ -1,35 +1,46 @@
 <template>
   <div class="space-y-4">
     <!-- 支出统计卡片 -->
-    <div class="grid grid-cols-3 gap-3">
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
-        <div class="text-2xl mb-1">📅</div>
-        <div class="text-xs text-gray-500 mb-1">今日</div>
-        <div class="text-lg font-bold text-gray-900">¥{{ formatAmount(expenseStore.todayTotal) }}</div>
+    <div class="grid grid-cols-3 gap-4 animate-fade-in-up">
+      <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-4 shadow-xl border border-white/20 text-center transform hover:scale-105 transition-all duration-300">
+        <div class="w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+          <span class="text-white text-lg font-bold">今</span>
+        </div>
+        <div class="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide">今日</div>
+        <div class="text-lg font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">¥{{ formatAmount(expenseStore.todayTotal) }}</div>
       </div>
       
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
-        <div class="text-2xl mb-1">📊</div>
-        <div class="text-xs text-gray-500 mb-1">本周</div>
-        <div class="text-lg font-bold text-green-600">¥{{ formatAmount(expenseStore.weekTotal) }}</div>
+      <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-4 shadow-xl border border-white/20 text-center transform hover:scale-105 transition-all duration-300">
+        <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+          <span class="text-white text-lg font-bold">周</span>
+        </div>
+        <div class="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide">本周</div>
+        <div class="text-lg font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">¥{{ formatAmount(expenseStore.weekTotal) }}</div>
       </div>
       
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
-        <div class="text-2xl mb-1">📈</div>
-        <div class="text-xs text-gray-500 mb-1">本月</div>
-        <div class="text-lg font-bold text-blue-600">¥{{ formatAmount(expenseStore.monthTotal) }}</div>
+      <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-4 shadow-xl border border-white/20 text-center transform hover:scale-105 transition-all duration-300">
+        <div class="w-12 h-12 bg-gradient-to-r from-blue-400 to-purple-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+          <span class="text-white text-lg font-bold">月</span>
+        </div>
+        <div class="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide">本月</div>
+        <div class="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">¥{{ formatAmount(expenseStore.monthTotal) }}</div>
       </div>
     </div>
     
     <!-- 最近记录 -->
-    <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="font-semibold text-gray-900">最近记录</h3>
+    <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20 animate-slide-in-right">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="font-bold text-gray-900 flex items-center space-x-3">
+          <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
+            <span class="text-white text-sm font-bold">📝</span>
+          </div>
+          <span class="text-lg">最近记录</span>
+        </h3>
         <router-link
           to="/statistics"
-          class="text-sm text-green-600 hover:text-green-700 font-medium"
+          class="text-sm bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent hover:from-purple-700 hover:to-pink-700 font-bold transition-all duration-300"
         >
-          查看全部
+          查看全部 →
         </router-link>
       </div>
       
@@ -46,50 +57,54 @@
         </div>
       </div>
       
-      <div v-else-if="recentExpenses.length === 0" class="text-center py-8">
-        <div class="text-4xl mb-2">💰</div>
-        <p class="text-gray-500 text-sm">还没有支出记录</p>
-        <p class="text-gray-400 text-xs mt-1">开始记录您的第一笔支出吧</p>
+      <div v-else-if="recentExpenses.length === 0" class="text-center py-12">
+        <div class="w-20 h-20 bg-gradient-to-r from-gray-200 to-gray-300 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <span class="text-3xl">💰</span>
+        </div>
+        <p class="text-gray-600 text-base font-medium mb-2">还没有支出记录</p>
+        <p class="text-gray-400 text-sm">开始记录您的第一笔支出吧 ✨</p>
       </div>
       
-      <div v-else class="space-y-3">
+      <div v-else class="space-y-4">
         <div
           v-for="expense in recentExpenses"
           :key="expense.id"
-          class="flex items-center justify-between py-2 border-b border-gray-50 last:border-b-0"
+          class="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-[1.02]"
         >
-          <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center"
-                 :style="{ backgroundColor: getCategoryColor(expense.category_id) + '20' }">
-              <span class="text-lg">{{ getCategoryIcon(expense.category_id) }}</span>
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg"
+                 :style="{ background: `linear-gradient(135deg, ${getCategoryColor(expense.category_id)}20, ${getCategoryColor(expense.category_id)}40)` }">
+              <span class="text-xl">{{ getCategoryIcon(expense.category_id) }}</span>
             </div>
             <div>
-              <div class="font-medium text-gray-900 text-sm">
+              <div class="font-bold text-gray-900 text-sm">
                 {{ expense.description || getCategoryName(expense.category_id) }}
               </div>
-              <div class="text-xs text-gray-500 flex items-center space-x-2">
-                <span>{{ formatDate(expense.expense_date) }}</span>
-                <span v-if="expense.source === 'voice'" class="inline-flex items-center">
-                  <Mic :size="12" class="mr-1" />
-                  语音
+              <div class="text-xs text-gray-500 flex items-center space-x-3 mt-1">
+                <span class="font-medium">{{ formatDate(expense.expense_date) }}</span>
+                <span v-if="expense.source === 'voice'" class="inline-flex items-center bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                  <Mic :size="10" class="mr-1" />
+                  <span class="text-xs font-semibold">语音</span>
                 </span>
               </div>
             </div>
           </div>
           <div class="text-right">
-            <div class="font-semibold text-gray-900">¥{{ formatAmount(expense.amount) }}</div>
+            <div class="font-bold text-lg bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent">¥{{ formatAmount(expense.amount) }}</div>
           </div>
         </div>
       </div>
     </div>
     
     <!-- 预算提醒 -->
-    <div v-if="budgetWarning" class="bg-orange-50 border border-orange-200 rounded-xl p-4">
-      <div class="flex items-center space-x-2 mb-2">
-        <AlertTriangle :size="16" class="text-orange-500" />
-        <span class="font-medium text-orange-800">预算提醒</span>
+    <div v-if="budgetWarning" class="bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-200 rounded-2xl p-6 shadow-lg animate-pulse-soft">
+      <div class="flex items-center space-x-3 mb-3">
+        <div class="w-8 h-8 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg">
+          <AlertTriangle :size="16" class="text-white" />
+        </div>
+        <span class="font-bold text-orange-800 text-lg">预算提醒</span>
       </div>
-      <p class="text-sm text-orange-700">{{ budgetWarning }}</p>
+      <p class="text-sm text-orange-700 font-medium leading-relaxed">{{ budgetWarning }}</p>
     </div>
   </div>
 </template>

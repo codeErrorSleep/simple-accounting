@@ -83,6 +83,93 @@ pnpm dev
 5. **访问应用**
 打开浏览器访问 `http://localhost:5173`
 
+## 🌐 部署到 Vercel
+
+### 前置要求
+- GitHub 账号
+- Vercel 账号（可使用 GitHub 登录）
+
+### 部署步骤
+
+#### 方法一：通过 Vercel 网站部署（推荐）
+
+1. **推送代码到 GitHub**
+```bash
+# 如果还没有推送到 GitHub
+git add .
+git commit -m "Ready for deployment"
+git push origin main
+```
+
+2. **连接 Vercel**
+- 访问 [Vercel](https://vercel.com)
+- 使用 GitHub 账号登录
+- 点击 "New Project"
+- 选择你的 GitHub 仓库
+
+3. **配置环境变量**
+在 Vercel 项目设置中添加环境变量：
+- `VITE_SUPABASE_URL`: 你的 Supabase 项目 URL
+- `VITE_SUPABASE_ANON_KEY`: 你的 Supabase 匿名密钥
+
+4. **部署**
+- 点击 "Deploy" 按钮
+- 等待构建完成
+- 获取部署 URL
+
+#### 方法二：通过 Vercel CLI 部署
+
+1. **安装 Vercel CLI**
+```bash
+npm install -g vercel
+```
+
+2. **登录 Vercel**
+```bash
+vercel login
+```
+
+3. **部署项目**
+```bash
+# 在项目根目录运行
+vercel
+
+# 首次部署时会询问项目配置，按提示操作
+# 后续部署只需运行 vercel 即可
+```
+
+4. **设置环境变量**
+```bash
+# 添加生产环境变量
+vercel env add VITE_SUPABASE_URL
+vercel env add VITE_SUPABASE_ANON_KEY
+
+# 重新部署以应用环境变量
+vercel --prod
+```
+
+### 部署配置说明
+
+项目已包含 `vercel.json` 配置文件，包含以下设置：
+- 静态构建配置
+- SPA 路由支持
+- 环境变量配置
+- 构建输出目录设置
+
+### 注意事项
+
+1. **环境变量安全**
+   - 确保 `.env` 文件已在 `.gitignore` 中
+   - 在 Vercel 中设置环境变量，不要在代码中硬编码
+
+2. **域名配置**
+   - Vercel 会自动分配一个域名
+   - 可以在项目设置中配置自定义域名
+
+3. **自动部署**
+   - 推送到 main 分支会自动触发部署
+   - 可以在 Vercel 仪表板中查看部署状态
+
 ### Supabase 配置
 
 1. 在 [Supabase](https://supabase.com) 创建新项目
