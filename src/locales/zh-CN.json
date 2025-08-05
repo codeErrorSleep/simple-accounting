@@ -122,7 +122,9 @@
     "averageDaily": "日均支出",
     "monthlyExpense": "月支出",
     "categoryBreakdown": "分类统计",
-    "trend": "趋势"
+    "trend": "趋势",
+    "overview": "数据概览",
+    "trendPrediction": "趋势预测"
   },
   "budget": {
     "budgetManagement": "预算管理",
@@ -185,6 +187,32 @@
     "analyzing": "分析中...",
     "confirmExpense": "确认支出",
     "editExpense": "编辑支出"
+  },
+  "prediction": {
+    "category": "分类",
+    "allCategories": "全部分类",
+    "timeRange": "预测时间范围",
+    "months": "个月",
+    "algorithm": "预测算法",
+    "combined": "组合算法",
+    "linear": "线性回归",
+    "movingAverage": "移动平均",
+    "insufficientData": "数据不足，无法进行预测",
+    "needMoreData": "至少需要10条支出记录才能进行趋势预测",
+    "nextMonthPrediction": "下月预测支出",
+    "trend": "趋势",
+    "confidence": "置信度",
+    "increasing": "上升",
+    "decreasing": "下降",
+    "stable": "稳定",
+    "historicalData": "历史数据",
+    "predictedData": "预测数据",
+    "suggestions": "预测建议",
+    "lowConfidenceSuggestion": "预测置信度较低，建议增加更多支出记录以提高预测准确性。",
+    "increasingSuggestion": "预测显示支出呈上升趋势，建议合理控制开支，考虑调整预算至{amount}元左右。",
+    "decreasingSuggestion": "预测显示支出呈下降趋势，这是一个好兆头！继续保持良好的消费习惯。",
+    "stableSuggestion": "预测显示支出相对稳定，建议继续保持当前的消费模式。",
+    "generalSuggestion": "根据历史数据分析，建议定期检查支出情况，合理规划财务。"
   },
   "errors": {
     "networkError": "网络错误",

@@ -14,7 +14,9 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.53.0",
     "chart.js": "^4.5.0",
+    "chartjs-adapter-date-fns": "^3.0.0",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "lucide-vue-next": "^0.511.0",
     "pinia": "^3.0.3",
     "sonner": "^2.0.7",

@@ -122,7 +122,9 @@
     "noExpenseRecords": "No expense records yet",
     "monthlyExpense": "Monthly Expense",
     "categoryBreakdown": "Category Breakdown",
-    "trend": "Trend"
+    "trend": "Trend",
+    "overview": "Overview",
+    "trendPrediction": "Trend Prediction"
   },
   "budget": {
     "budgetManagement": "Budget Management",
@@ -185,6 +187,32 @@
     "analyzing": "Analyzing...",
     "confirmExpense": "Confirm Expense",
     "editExpense": "Edit Expense"
+  },
+  "prediction": {
+    "category": "Category",
+    "allCategories": "All Categories",
+    "timeRange": "Prediction Time Range",
+    "months": "months",
+    "algorithm": "Prediction Algorithm",
+    "combined": "Combined",
+    "linear": "Linear Regression",
+    "movingAverage": "Moving Average",
+    "insufficientData": "Insufficient data for prediction",
+    "needMoreData": "At least 10 expense records are needed for trend prediction",
+    "nextMonthPrediction": "Next Month Prediction",
+    "trend": "Trend",
+    "confidence": "Confidence",
+    "increasing": "Increasing",
+    "decreasing": "Decreasing",
+    "stable": "Stable",
+    "historicalData": "Historical Data",
+    "predictedData": "Predicted Data",
+    "suggestions": "Prediction Suggestions",
+    "lowConfidenceSuggestion": "Low prediction confidence. Consider adding more expense records to improve accuracy.",
+    "increasingSuggestion": "Prediction shows an increasing trend. Consider controlling expenses and adjusting budget to around ${amount}.",
+    "decreasingSuggestion": "Prediction shows a decreasing trend. Great job! Keep up the good spending habits.",
+    "stableSuggestion": "Prediction shows stable expenses. Continue maintaining your current spending pattern.",
+    "generalSuggestion": "Based on historical data analysis, regularly review expenses and plan finances wisely."
   },
   "errors": {
     "networkError": "Network error",

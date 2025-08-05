@@ -1,6 +1,6 @@
 <template>
   <div class="space-y-6">
-    <!-- 页面标题和筛选 -->
+    <!-- 页面标题和标签页 -->
     <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-xl font-semibold text-gray-900">{{ $t('statistics.title') }}</h2>
@@ -15,22 +15,53 @@
         </select>
       </div>
       
+      <!-- 标签页导航 -->
+      <div class="flex space-x-1 bg-gray-100 rounded-lg p-1">
+        <button
+          @click="activeTab = 'overview'"
+          :class="[
+            'flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-200',
+            activeTab === 'overview'
+              ? 'bg-white text-green-600 shadow-sm'
+              : 'text-gray-600 hover:text-gray-900'
+          ]"
+        >
+          {{ $t('statistics.overview') }}
+        </button>
+        <button
+          @click="activeTab = 'prediction'"
+          :class="[
+            'flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-200',
+            activeTab === 'prediction'
+              ? 'bg-white text-green-600 shadow-sm'
+              : 'text-gray-600 hover:text-gray-900'
+          ]"
+        >
+          {{ $t('statistics.trendPrediction') }}
+        </button>
+      </div>
+      
+    </div>
+    
+    <!-- 标签页内容 -->
+    <div v-if="activeTab === 'overview'">
       <!-- 总览卡片 -->
-      <div class="grid grid-cols-3 gap-3">
-        <div class="text-center p-3 bg-red-50 rounded-lg">
-          <div class="text-lg font-bold text-red-600">¥{{ formatAmount(totalExpense) }}</div>
-          <div class="text-xs text-red-500">{{ $t('statistics.totalExpense') }}</div>
-        </div>
-        <div class="text-center p-3 bg-blue-50 rounded-lg">
-          <div class="text-lg font-bold text-blue-600">{{ expenseCount }}</div>
-          <div class="text-xs text-blue-500">{{ $t('statistics.count') }}</div>
-        </div>
-        <div class="text-center p-3 bg-green-50 rounded-lg">
-          <div class="text-lg font-bold text-green-600">¥{{ formatAmount(avgExpense) }}</div>
-          <div class="text-xs text-green-500">{{ $t('statistics.average') }}</div>
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <div class="grid grid-cols-3 gap-3">
+          <div class="text-center p-3 bg-red-50 rounded-lg">
+            <div class="text-lg font-bold text-red-600">¥{{ formatAmount(totalExpense) }}</div>
+            <div class="text-xs text-red-500">{{ $t('statistics.totalExpense') }}</div>
+          </div>
+          <div class="text-center p-3 bg-blue-50 rounded-lg">
+            <div class="text-lg font-bold text-blue-600">{{ expenseCount }}</div>
+            <div class="text-xs text-blue-500">{{ $t('statistics.count') }}</div>
+          </div>
+          <div class="text-center p-3 bg-green-50 rounded-lg">
+            <div class="text-lg font-bold text-green-600">¥{{ formatAmount(avgExpense) }}</div>
+            <div class="text-xs text-green-500">{{ $t('statistics.average') }}</div>
+          </div>
         </div>
       </div>
-    </div>
     
     <!-- 分类支出饼图 -->
     <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
@@ -105,44 +136,50 @@
       </div>
     </div>
     
-    <!-- 最近记录 -->
-    <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="font-semibold text-gray-900">{{ $t('statistics.recentRecords') }}</h3>
-        <router-link
-          to="/record"
-          class="text-sm text-green-600 hover:text-green-700 font-medium"
-        >
-          {{ $t('statistics.addRecord') }}
-        </router-link>
-      </div>
-      
-      <div v-if="recentExpenses.length === 0" class="text-center py-8">
-        <div class="text-4xl mb-2">💰</div>
-        <p class="text-gray-500">{{ $t('statistics.noExpenseRecords') }}</p>
-      </div>
-      
-      <div v-else class="space-y-3">
-        <div
-          v-for="expense in recentExpenses"
-          :key="expense.id"
-          class="flex items-center justify-between py-2"
-        >
-          <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 rounded-full flex items-center justify-center"
-                 :style="{ backgroundColor: getCategoryColor(expense.category_id) + '20' }">
-              <span class="text-sm">{{ getCategoryIcon(expense.category_id) }}</span>
-            </div>
-            <div>
-              <div class="font-medium text-gray-900 text-sm">
-                {{ expense.description || getCategoryName(expense.category_id) }}
+      <!-- 最近记录 -->
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-semibold text-gray-900">{{ $t('statistics.recentRecords') }}</h3>
+          <router-link
+            to="/record"
+            class="text-sm text-green-600 hover:text-green-700 font-medium"
+          >
+            {{ $t('statistics.addRecord') }}
+          </router-link>
+        </div>
+        
+        <div v-if="recentExpenses.length === 0" class="text-center py-8">
+          <div class="text-4xl mb-2">💰</div>
+          <p class="text-gray-500">{{ $t('statistics.noExpenseRecords') }}</p>
+        </div>
+        
+        <div v-else class="space-y-3">
+          <div
+            v-for="expense in recentExpenses"
+            :key="expense.id"
+            class="flex items-center justify-between py-2"
+          >
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center"
+                   :style="{ backgroundColor: getCategoryColor(expense.category_id) + '20' }">
+                <span class="text-sm">{{ getCategoryIcon(expense.category_id) }}</span>
               </div>
-              <div class="text-xs text-gray-500">{{ formatDate(expense.expense_date) }}</div>
+              <div>
+                <div class="font-medium text-gray-900 text-sm">
+                  {{ expense.description || getCategoryName(expense.category_id) }}
+                </div>
+                <div class="text-xs text-gray-500">{{ formatDate(expense.expense_date) }}</div>
+              </div>
             </div>
+            <div class="font-semibold text-gray-900">¥{{ formatAmount(expense.amount) }}</div>
           </div>
-          <div class="font-semibold text-gray-900">¥{{ formatAmount(expense.amount) }}</div>
         </div>
       </div>
+    </div>
+    
+    <!-- 趋势预测标签页 -->
+    <div v-else-if="activeTab === 'prediction'" class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+      <TrendPredictionChart />
     </div>
   </div>
 </template>
@@ -151,6 +188,7 @@
 import { ref, computed, onMounted, nextTick, watch } from 'vue'
 import { Chart, registerables } from 'chart.js'
 import { useExpenseStore, useCategoryStore } from '@/stores'
+import TrendPredictionChart from '@/components/TrendPredictionChart.vue'
 import type { Expense } from '@/lib/supabase'
 
 // 注册 Chart.js 组件
@@ -162,6 +200,7 @@ const categoryStore = useCategoryStore()
 // 状态
 const loading = ref(true)
 const selectedPeriod = ref('month')
+const activeTab = ref('overview')
 const pieChartRef = ref<HTMLCanvasElement>()
 const lineChartRef = ref<HTMLCanvasElement>()
 let pieChart: Chart | null = null
