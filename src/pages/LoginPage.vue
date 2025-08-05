@@ -194,7 +194,7 @@
       
       <!-- 底部信息 -->
       <div class="text-center mt-6 text-sm text-gray-500">
-        <p>© 2024 记个大概. 保留所有权利.</p>
+        <p>© 2025 记个大概. 保留所有权利.</p>
       </div>
     </div>
   </div>

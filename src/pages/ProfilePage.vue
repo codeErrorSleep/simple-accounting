@@ -99,7 +99,7 @@
       
       <div class="mt-3 pt-3 border-t border-gray-100 dark:border-gray-600">
         <p class="text-xs text-gray-500 dark:text-gray-400 text-center">
-          © 2024 记个大概. 保留所有权利.
+          © 2025 记个大概. 保留所有权利.
         </p>
       </div>
     </div>
