@@ -1,13 +1,13 @@
 <template>
-  <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 backdrop-blur-sm">
+  <div class="bg-white dark:bg-green-900 rounded-3xl p-8 shadow-xl border border-green-100 dark:border-green-700 backdrop-blur-sm">
     <div class="text-center">
       <div class="mb-6">
-        <h3 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">AI 语音记账</h3>
+        <h3 class="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">AI 语音记账</h3>
         <p class="text-sm text-gray-500 dark:text-gray-400">说出您的支出，AI 智能识别</p>
       </div>
       
       <!-- 录音按钮区域 -->
-      <div class="relative mb-8">
+      <div class="relative mb-8 flex justify-center">
         <!-- 外圈动画 -->
         <div v-if="isRecording" class="absolute inset-0 flex items-center justify-center">
           <div class="w-32 h-32 rounded-full border-4 border-red-300 animate-ping opacity-75"></div>
@@ -18,16 +18,16 @@
         <button
           @click="toggleRecording"
           :disabled="!isSupported"
-          class="relative w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
+          class="relative w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800"
           :class="{
-            'bg-gradient-to-br from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-2xl': !isRecording && isSupported,
+            'bg-gradient-to-br from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-2xl': !isRecording && isSupported,
             'bg-gradient-to-br from-red-500 to-pink-600 shadow-2xl shadow-red-500/25': isRecording,
             'bg-gray-300 dark:bg-gray-600 cursor-not-allowed': !isSupported
           }"
         >
-          <div class="relative z-10">
-            <Mic v-if="!isRecording" :size="36" class="text-white drop-shadow-lg" />
-            <Square v-else :size="28" class="text-white drop-shadow-lg" />
+          <div class="relative z-10 flex items-center justify-center">
+            <Mic v-if="!isRecording" :size="32" class="text-white drop-shadow-lg" />
+            <Square v-else :size="32" class="text-white drop-shadow-lg" />
           </div>
           
           <!-- 内部脉冲动画 -->
@@ -56,8 +56,8 @@
           <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
           <span class="text-sm font-medium animate-pulse">正在录音... 请说出您的支出内容</span>
         </div>
-        <div v-else-if="isProcessing" class="flex items-center justify-center space-x-2 text-blue-500">
-          <div class="w-2 h-2 bg-blue-500 rounded-full animate-spin"></div>
+        <div v-else-if="isProcessing" class="flex items-center justify-center space-x-2 text-green-500">
+          <div class="w-2 h-2 bg-green-500 rounded-full animate-spin"></div>
           <span class="text-sm font-medium">AI 正在智能识别...</span>
         </div>
         <div v-else class="flex items-center justify-center space-x-2 text-gray-500 dark:text-gray-400">
@@ -73,7 +73,7 @@
               v-for="example in quickExamples"
               :key="example.text"
               @click="simulateVoiceInput(example)"
-              class="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              class="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full hover:bg-green-100 dark:hover:bg-green-900 hover:text-green-600 dark:hover:text-green-400 transition-colors"
             >
               {{ example.text }}
             </button>
@@ -82,20 +82,20 @@
       </div>
       
       <!-- 识别结果 -->
-      <div v-if="recognitionResult" class="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-800 rounded-2xl p-6 text-left border border-blue-100 dark:border-gray-600 shadow-lg">
+      <div v-if="recognitionResult" class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-700 dark:to-gray-800 rounded-2xl p-6 text-left border border-green-100 dark:border-gray-600 shadow-lg">
         <div class="flex items-center space-x-2 mb-4">
           <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
           <h4 class="font-bold text-gray-900 dark:text-white">AI 识别结果</h4>
           <div class="flex-1"></div>
           <span class="text-xs bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-1 rounded-full">置信度 {{ Math.round(recognitionResult.confidence * 100) }}%</span>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-4 mb-4 border border-gray-200 dark:border-gray-600">
+        <div class="bg-white dark:bg-green-800 rounded-xl p-4 mb-4 border border-green-200 dark:border-green-600">
           <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">语音内容：</p>
           <p class="text-base text-gray-800 dark:text-gray-200 font-medium italic">"{{ recognitionResult.text }}"</p>
         </div>
         
         <div class="grid grid-cols-2 gap-4 mb-6">
-          <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-600 shadow-sm">
+          <div class="bg-white dark:bg-green-800 rounded-xl p-4 border border-green-200 dark:border-green-600 shadow-sm">>
             <label class="text-xs font-medium text-gray-500 dark:text-gray-400 block mb-2 uppercase tracking-wide">金额</label>
             <div class="relative">
               <span class="absolute left-0 top-1/2 transform -translate-y-1/2 text-green-600 dark:text-green-400 font-bold text-lg">¥</span>
@@ -109,13 +109,13 @@
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-600 shadow-sm">
+          <div class="bg-white dark:bg-green-800 rounded-xl p-4 border border-green-200 dark:border-green-600 shadow-sm">
             <label class="text-xs font-medium text-gray-500 dark:text-gray-400 block mb-2 uppercase tracking-wide">分类</label>
             <select
               v-model="recognitionResult.category"
-              class="w-full text-sm font-semibold bg-transparent border-none outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-700 rounded-lg text-gray-700 dark:text-gray-200"
+              class="w-full text-sm font-semibold bg-transparent border-none outline-none focus:ring-2 focus:ring-green-300 dark:focus:ring-green-700 rounded-lg text-gray-700 dark:text-gray-200"
             >
-              <option v-for="category in categoryStore.categories" :key="category.id" :value="category.id" class="bg-white dark:bg-gray-800">
+              <option v-for="category in categoryStore.categories" :key="category.id" :value="category.id" class="bg-white dark:bg-green-800">
                 {{ category.icon }} {{ category.name }}
               </option>
             </select>
@@ -142,7 +142,7 @@
           
           <button
             @click="clearResult"
-            class="px-6 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 font-semibold flex items-center space-x-2"
+            class="px-6 py-3 border-2 border-green-300 dark:border-green-600 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-green-50 dark:hover:bg-green-700 transition-all duration-300 font-semibold flex items-center space-x-2"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
