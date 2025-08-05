@@ -3,15 +3,15 @@
     <!-- 页面标题和筛选 -->
     <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
       <div class="flex items-center justify-between mb-4">
-        <h2 class="text-xl font-semibold text-gray-900">统计分析</h2>
+        <h2 class="text-xl font-semibold text-gray-900">{{ $t('statistics.title') }}</h2>
         <select
           v-model="selectedPeriod"
           @change="updateData"
           class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
         >
-          <option value="week">本周</option>
-          <option value="month">本月</option>
-          <option value="year">本年</option>
+          <option value="week">{{ $t('statistics.thisWeek') }}</option>
+          <option value="month">{{ $t('statistics.thisMonth') }}</option>
+          <option value="year">{{ $t('statistics.thisYear') }}</option>
         </select>
       </div>
       
@@ -19,28 +19,28 @@
       <div class="grid grid-cols-3 gap-3">
         <div class="text-center p-3 bg-red-50 rounded-lg">
           <div class="text-lg font-bold text-red-600">¥{{ formatAmount(totalExpense) }}</div>
-          <div class="text-xs text-red-500">总支出</div>
+          <div class="text-xs text-red-500">{{ $t('statistics.totalExpense') }}</div>
         </div>
         <div class="text-center p-3 bg-blue-50 rounded-lg">
           <div class="text-lg font-bold text-blue-600">{{ expenseCount }}</div>
-          <div class="text-xs text-blue-500">笔数</div>
+          <div class="text-xs text-blue-500">{{ $t('statistics.count') }}</div>
         </div>
         <div class="text-center p-3 bg-green-50 rounded-lg">
           <div class="text-lg font-bold text-green-600">¥{{ formatAmount(avgExpense) }}</div>
-          <div class="text-xs text-green-500">平均</div>
+          <div class="text-xs text-green-500">{{ $t('statistics.average') }}</div>
         </div>
       </div>
     </div>
     
     <!-- 分类支出饼图 -->
     <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-      <h3 class="font-semibold text-gray-900 mb-4">分类支出分布</h3>
+      <h3 class="font-semibold text-gray-900 mb-4">{{ $t('statistics.categoryDistribution') }}</h3>
       <div v-if="loading" class="flex items-center justify-center h-64">
         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
       </div>
       <div v-else-if="categoryData.length === 0" class="text-center py-12">
         <div class="text-4xl mb-2">📊</div>
-        <p class="text-gray-500">暂无数据</p>
+        <p class="text-gray-500">{{ $t('statistics.noData') }}</p>
       </div>
       <div v-else class="relative">
         <canvas ref="pieChartRef" class="max-h-64 mx-auto"></canvas>
@@ -49,7 +49,7 @@
     
     <!-- 趋势图表 -->
     <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-      <h3 class="font-semibold text-gray-900 mb-4">支出趋势</h3>
+      <h3 class="font-semibold text-gray-900 mb-4">{{ $t('statistics.expenseTrend') }}</h3>
       <div v-if="loading" class="flex items-center justify-center h-48">
         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
       </div>
@@ -64,7 +64,7 @@
     
     <!-- 分类详情列表 -->
     <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-      <h3 class="font-semibold text-gray-900 mb-4">分类详情</h3>
+      <h3 class="font-semibold text-gray-900 mb-4">{{ $t('statistics.categoryDetails') }}</h3>
       <div v-if="loading" class="space-y-3">
         <div v-for="i in 5" :key="i" class="animate-pulse">
           <div class="flex items-center space-x-3">
@@ -79,7 +79,7 @@
       </div>
       <div v-else-if="categoryStats.length === 0" class="text-center py-8">
         <div class="text-4xl mb-2">📋</div>
-        <p class="text-gray-500">暂无分类数据</p>
+        <p class="text-gray-500">{{ $t('statistics.noCategoryData') }}</p>
       </div>
       <div v-else class="space-y-3">
         <div
@@ -94,7 +94,7 @@
             </div>
             <div>
               <div class="font-medium text-gray-900">{{ stat.name }}</div>
-              <div class="text-sm text-gray-500">{{ stat.count }} 笔记录</div>
+              <div class="text-sm text-gray-500">{{ stat.count }} {{ $t('statistics.records') }}</div>
             </div>
           </div>
           <div class="text-right">
@@ -108,18 +108,18 @@
     <!-- 最近记录 -->
     <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
       <div class="flex items-center justify-between mb-4">
-        <h3 class="font-semibold text-gray-900">最近记录</h3>
+        <h3 class="font-semibold text-gray-900">{{ $t('statistics.recentRecords') }}</h3>
         <router-link
           to="/record"
           class="text-sm text-green-600 hover:text-green-700 font-medium"
         >
-          添加记录
+          {{ $t('statistics.addRecord') }}
         </router-link>
       </div>
       
       <div v-if="recentExpenses.length === 0" class="text-center py-8">
         <div class="text-4xl mb-2">💰</div>
-        <p class="text-gray-500">还没有支出记录</p>
+        <p class="text-gray-500">{{ $t('statistics.noExpenseRecords') }}</p>
       </div>
       
       <div v-else class="space-y-3">

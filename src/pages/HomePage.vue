@@ -36,13 +36,13 @@ onMounted(() => {
         <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
           <span class="text-white text-2xl font-bold">记</span>
         </div>
-        <h2 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">欢迎使用记个大概</h2>
-        <p class="text-gray-600 text-base mb-6 leading-relaxed">AI 智能记账，让财务管理变得简单有趣</p>
+        <h2 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">{{ $t('home.welcome') }}</h2>
+        <p class="text-gray-600 text-base mb-6 leading-relaxed">{{ $t('home.subtitle') }}</p>
         <router-link
           to="/login"
           class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg"
         >
-          立即开始 ✨
+          {{ $t('home.getStarted') }} ✨
         </router-link>
       </div>
     </div>
@@ -61,7 +61,7 @@ onMounted(() => {
           <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
             <Clock :size="16" class="text-white" />
           </div>
-          <span class="text-lg">固定支出提醒</span>
+          <span class="text-lg">{{ $t('home.recurringExpenseReminder') }}</span>
         </h3>
         
         <!-- 今日到期 -->
@@ -70,7 +70,7 @@ onMounted(() => {
             <div class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
               <AlertCircle :size="12" class="text-white" />
             </div>
-            <span>今日到期</span>
+            <span>{{ $t('home.dueTodayLabel') }}</span>
           </h4>
           <div class="space-y-3">
             <div
@@ -86,7 +86,7 @@ onMounted(() => {
                 @click="generateExpenseRecord(expense)"
                 class="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
-                记录支出
+                {{ $t('home.recordExpense') }}
               </button>
             </div>
           </div>
@@ -98,7 +98,7 @@ onMounted(() => {
             <div class="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center">
               <Clock :size="12" class="text-white" />
             </div>
-            <span>即将到期</span>
+            <span>{{ $t('home.upcomingDueLabel') }}</span>
           </h4>
           <div class="space-y-3">
             <div
@@ -121,7 +121,7 @@ onMounted(() => {
             to="/recurring-expenses"
             class="text-sm bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:from-blue-700 hover:to-purple-700 font-bold transition-all duration-300"
           >
-            管理所有固定支出 →
+            {{ $t('home.manageAllRecurringExpenses') }} →
           </router-link>
         </div>
       </div>
@@ -132,7 +132,7 @@ onMounted(() => {
           <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
             <span class="text-white text-sm font-bold">⚡</span>
           </div>
-          <span class="text-lg">快速操作</span>
+          <span class="text-lg">{{ $t('home.quickActions') }}</span>
         </h3>
         <div class="grid grid-cols-2 gap-4">
           <router-link
@@ -142,7 +142,7 @@ onMounted(() => {
             <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
               <Plus :size="20" class="text-white" />
             </div>
-            <span class="font-bold text-sm">手动记账</span>
+            <span class="font-bold text-sm">{{ $t('home.manualRecord') }}</span>
           </router-link>
           
           <router-link
@@ -152,7 +152,7 @@ onMounted(() => {
             <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
               <Target :size="20" class="text-white" />
             </div>
-            <span class="font-bold text-sm">设置预算</span>
+            <span class="font-bold text-sm">{{ $t('home.setBudget') }}</span>
           </router-link>
         </div>
       </div>

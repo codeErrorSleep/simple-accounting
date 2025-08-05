@@ -2,15 +2,15 @@
   <div class="space-y-4">
     <!-- 页面标题 -->
     <div class="text-center">
-      <h2 class="text-lg font-semibold text-gray-900 mb-1">手动记账</h2>
-      <p class="text-gray-600 text-xs">记录您的支出详情</p>
+      <h2 class="text-lg font-semibold text-gray-900 mb-1">{{ $t('record.title') }}</h2>
+      <p class="text-gray-600 text-xs">{{ $t('record.subtitle') }}</p>
     </div>
     
     <!-- 记账表单 -->
     <form @submit.prevent="handleSubmit" class="space-y-4">
       <!-- 金额输入 -->
       <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-        <label class="block text-sm font-medium text-gray-700 mb-2">支出金额</label>
+        <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('record.amount') }}</label>
         <div class="relative">
           <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">¥</span>
           <input
@@ -27,7 +27,7 @@
       
       <!-- 分类选择 -->
       <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-        <label class="block text-sm font-medium text-gray-700 mb-2">支出分类</label>
+        <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('record.category') }}</label>
         <div v-if="categoryStore.loading" class="grid grid-cols-3 gap-3">
           <div v-for="i in 6" :key="i" class="animate-pulse">
             <div class="h-16 bg-gray-200 rounded-lg"></div>
@@ -56,24 +56,24 @@
           @click="showAddCategory = true"
           class="w-full mt-3 py-2 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-gray-400 hover:text-gray-600 transition-colors"
         >
-          + 添加新分类
+          + {{ $t('record.addNewCategory') }}
         </button>
       </div>
       
       <!-- 描述输入 -->
       <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-        <label class="block text-sm font-medium text-gray-700 mb-2">支出描述</label>
+        <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('record.description') }}</label>
         <input
           v-model="form.description"
           type="text"
-          placeholder="例如：午餐、打车费用等"
+          :placeholder="$t('record.descriptionPlaceholder')"
           class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
         />
       </div>
       
       <!-- 日期选择 -->
       <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-        <label class="block text-sm font-medium text-gray-700 mb-2">支出日期</label>
+        <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('record.date') }}</label>
         <input
           v-model="form.expense_date"
           type="date"
@@ -91,9 +91,9 @@
         >
           <span v-if="submitting" class="flex items-center justify-center">
             <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-            保存中...
+            {{ $t('record.saving') }}
           </span>
-          <span v-else>保存记录</span>
+          <span v-else>{{ $t('record.saveRecord') }}</span>
         </button>
         
         <button
@@ -101,7 +101,7 @@
           @click="resetForm"
           class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 rounded-lg transition-colors"
         >
-          重置表单
+          {{ $t('record.resetForm') }}
         </button>
       </div>
     </form>
@@ -109,20 +109,20 @@
     <!-- 添加分类弹窗 -->
     <div v-if="showAddCategory" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div class="bg-white rounded-xl p-6 w-full max-w-sm">
-        <h3 class="text-lg font-semibold mb-4">添加新分类</h3>
+        <h3 class="text-lg font-semibold mb-4">{{ $t('record.addNewCategory') }}</h3>
         <form @submit.prevent="addCategory" class="space-y-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">分类名称</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('record.categoryName') }}</label>
             <input
               v-model="newCategory.name"
               type="text"
-              placeholder="例如：交通、娱乐等"
+              :placeholder="$t('record.categoryNamePlaceholder')"
               class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               required
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">图标</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('record.icon') }}</label>
             <input
               v-model="newCategory.icon"
               type="text"
@@ -132,7 +132,7 @@
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">颜色</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('record.color') }}</label>
             <div class="grid grid-cols-6 gap-2">
               <button
                 v-for="color in predefinedColors"
@@ -154,14 +154,14 @@
               @click="showAddCategory = false"
               class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 rounded-lg transition-colors"
             >
-              取消
+              {{ $t('common.cancel') }}
             </button>
             <button
               type="submit"
               :disabled="addingCategory"
               class="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white font-medium py-2 rounded-lg transition-colors"
             >
-              {{ addingCategory ? '添加中...' : '添加' }}
+              {{ addingCategory ? $t('record.adding') : $t('common.add') }}
             </button>
           </div>
         </form>

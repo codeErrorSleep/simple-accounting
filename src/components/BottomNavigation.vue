@@ -22,7 +22,7 @@
           <div class="mb-1 transform transition-transform duration-300" :class="{ 'scale-110': $route.path === item.path }">
             <component :is="item.icon" :size="22" />
           </div>
-          <span class="text-xs font-bold" :class="{ 'text-white': $route.path === item.path, 'text-gray-600': $route.path !== item.path }">{{ item.label }}</span>
+          <span class="text-xs font-bold" :class="{ 'text-white': $route.path === item.path, 'text-gray-600': $route.path !== item.path }">{{ $t(`nav.${item.name}`) }}</span>
         </div>
         
         <!-- 悬浮效果 -->
@@ -42,31 +42,26 @@ const navItems = [
   {
     name: 'home',
     path: '/',
-    label: '首页',
     icon: Home
   },
   {
     name: 'record',
     path: '/record',
-    label: '记账',
     icon: Plus
   },
   {
     name: 'statistics',
     path: '/statistics',
-    label: '统计',
     icon: BarChart3
   },
   {
     name: 'budget',
     path: '/budget',
-    label: '预算',
     icon: Target
   },
   {
     name: 'profile',
     path: '/profile',
-    label: '我的',
     icon: User
   }
 ]

@@ -1,7 +1,12 @@
 # TODO:
 
-- [x] 1: 优化RecordPage.vue的标题大小和模块间隙 (priority: High)
-- [x] 2: 将SettingsPage.vue重构为ProfilePage.vue（我的页面） (priority: High)
-- [x] 3: 创建新的SettingsPage.vue，包含原有设置和导出功能 (priority: High)
-- [x] 4: 更新路由配置，添加新的设置页面路由 (priority: High)
-- [x] 5: 更新底部导航，将设置改为我的 (priority: High)
+- [x] 1: 安装Vue I18n依赖包 (priority: High)
+- [x] 2: 创建locales目录结构和语言文件（zh-CN.json, en-US.json） (priority: High)
+- [x] 3: 配置i18n实例和相关设置（src/locales/index.ts） (priority: High)
+- [x] 4: 创建语言切换组件LanguageSwitch.vue (priority: High)
+- [x] 5: 在设置页面添加语言切换选项 (priority: High)
+- [x] 6: 更新所有页面和组件支持多语言（首页、记录、统计、预算、设置） (priority: Medium)
+- [x] 7: 实现语言偏好的本地存储功能 (priority: Medium)
+- [x] 8: 更新导航栏和路由组件支持多语言 (priority: Medium)
+- [x] 9: 测试所有界面的中英文切换功能 (priority: Low)
+- [x] 10: 运行检查确保代码质量和功能完整性 (priority: Low)

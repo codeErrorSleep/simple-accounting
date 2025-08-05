@@ -10,19 +10,19 @@
         <ArrowLeft :size="20" />
       </button>
       
-      <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">设置</h2>
-      <p class="text-gray-600 dark:text-gray-300 text-xs">管理您的应用偏好</p>
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">{{ $t('nav.settings') }}</h2>
+      <p class="text-gray-600 dark:text-gray-300 text-xs">{{ $t('settings.categoryManagement') }}</p>
     </div>
     
     <!-- 分类管理 -->
     <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
       <div class="flex items-center justify-between mb-3">
-        <h3 class="font-semibold text-gray-900 dark:text-white">分类管理</h3>
+        <h3 class="font-semibold text-gray-900 dark:text-white">{{ $t('settings.categoryManagement') }}</h3>
         <button
           @click="showAddCategory = true"
           class="text-green-600 hover:text-green-700 text-sm font-medium"
         >
-          + 添加分类
+          + {{ $t('settings.addCategory') }}
         </button>
       </div>
       
@@ -54,7 +54,7 @@
     
     <!-- 数据管理 -->
     <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
-      <h3 class="font-semibold text-gray-900 dark:text-white mb-3">数据管理</h3>
+      <h3 class="font-semibold text-gray-900 dark:text-white mb-3">{{ $t('settings.dataManagement') }}</h3>
       
       <div class="space-y-2">
         <button
@@ -63,7 +63,7 @@
           class="w-full flex items-center justify-center space-x-2 bg-blue-50 hover:bg-blue-100 disabled:bg-gray-100 text-blue-700 disabled:text-gray-500 py-3 px-4 rounded-lg transition-colors"
         >
           <Download :size="18" />
-          <span>{{ exporting ? '导出中...' : '导出数据' }}</span>
+          <span>{{ exporting ? $t('common.loading') : $t('settings.exportData') }}</span>
         </button>
         
         <button
@@ -71,21 +71,21 @@
           class="w-full flex items-center justify-center space-x-2 bg-red-50 hover:bg-red-100 text-red-700 py-3 px-4 rounded-lg transition-colors"
         >
           <Trash2 :size="18" />
-          <span>清空所有数据</span>
+          <span>{{ $t('settings.clearAllData') }}</span>
         </button>
       </div>
     </div>
     
     <!-- 应用设置 -->
     <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
-      <h3 class="font-semibold text-gray-900 dark:text-white mb-3">应用设置</h3>
+      <h3 class="font-semibold text-gray-900 dark:text-white mb-3">{{ $t('settings.languageSettings') }}</h3>
       
       <div class="space-y-3">
         <!-- 主题设置 -->
         <div class="flex items-center justify-between">
           <div>
-            <div class="font-medium text-gray-900 dark:text-white">深色模式</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">切换应用主题</div>
+            <div class="font-medium text-gray-900 dark:text-white">{{ $t('settings.darkMode') }}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.switchTheme') }}</div>
           </div>
           <button
             @click="toggleTheme"
@@ -102,8 +102,8 @@
         <!-- 语音记账设置 -->
         <div class="flex items-center justify-between">
           <div>
-            <div class="font-medium text-gray-900 dark:text-white">语音记账</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">启用语音输入功能</div>
+            <div class="font-medium text-gray-900 dark:text-white">{{ $t('home.voiceRecord') }}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.enableVoiceInput') }}</div>
           </div>
           <button
             @click="toggleVoiceRecording"
@@ -120,8 +120,8 @@
         <!-- 通知设置 -->
         <div class="flex items-center justify-between">
           <div>
-            <div class="font-medium text-gray-900 dark:text-white">预算提醒</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">预算超支时发送通知</div>
+            <div class="font-medium text-gray-900 dark:text-white">{{ $t('budget.budgetWarning') }}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.budgetNotification') }}</div>
           </div>
           <button
             @click="toggleNotifications"
@@ -134,26 +134,35 @@
             ></span>
           </button>
         </div>
+        
+        <!-- 语言设置 -->
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="font-medium text-gray-900 dark:text-white">{{ $t('settings.language') }}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.selectLanguage') }}</div>
+          </div>
+          <LanguageSwitch />
+        </div>
       </div>
     </div>
     
     <!-- 添加分类弹窗 -->
     <div v-if="showAddCategory" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div class="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-sm">
-        <h3 class="text-lg font-semibold dark:text-white mb-4">添加新分类</h3>
+        <h3 class="text-lg font-semibold dark:text-white mb-4">{{ $t('settings.addCategory') }}</h3>
         <form @submit.prevent="addCategory" class="space-y-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">分类名称</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t('settings.categoryName') }}</label>
             <input
               v-model="newCategory.name"
               type="text"
-              placeholder="例如：交通、娱乐等"
+              :placeholder="$t('settings.categoryNamePlaceholder')"
               class="w-full px-3 py-2 border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               required
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">图标</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t('settings.categoryIcon') }}</label>
             <input
               v-model="newCategory.icon"
               type="text"
@@ -163,7 +172,7 @@
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">颜色</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t('settings.categoryColor') }}</label>
             <div class="grid grid-cols-6 gap-2">
               <button
                 v-for="color in predefinedColors"
@@ -185,14 +194,14 @@
               @click="showAddCategory = false"
               class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 rounded-lg transition-colors"
             >
-              取消
+              {{ $t('common.cancel') }}
             </button>
             <button
               type="submit"
               :disabled="addingCategory"
               class="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white font-medium py-2 rounded-lg transition-colors"
             >
-              {{ addingCategory ? '添加中...' : '添加' }}
+              {{ addingCategory ? $t('common.loading') : $t('common.add') }}
             </button>
           </div>
         </form>
@@ -208,6 +217,7 @@ import { Trash2, Download, ArrowLeft } from 'lucide-vue-next'
 import { useExpenseStore, useCategoryStore, useBudgetStore } from '@/stores'
 import { useTheme } from '@/composables/useTheme'
 import { toast } from 'vue-sonner'
+import LanguageSwitch from '@/components/LanguageSwitch.vue'
 
 const router = useRouter()
 

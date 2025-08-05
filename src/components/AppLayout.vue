@@ -7,7 +7,7 @@
           <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
             <span class="text-white text-sm font-bold">记</span>
           </div>
-          <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{{ pageTitle }}</h1>
+          <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{{ $t(pageTitle) }}</h1>
         </div>
         <div class="flex items-center space-x-3">
           <!-- 用户头像或登录按钮 -->
@@ -23,7 +23,7 @@
             to="/login"
             class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold text-sm px-4 py-2 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105"
           >
-            登录
+            {{ $t('common.login') }}
           </router-link>
         </div>
       </div>
@@ -70,17 +70,18 @@ onMounted(async () => {
 })
 
 // 页面标题映射
-const pageTitles: Record<string, string> = {
-  '/': '记个大概',
-  '/record': '记账',
-  '/statistics': '统计',
-  '/budget': '预算',
-  '/settings': '设置',
-  '/login': '登录'
-}
-
 const pageTitle = computed(() => {
-  return pageTitles[route.path] || '记个大概'
+  const titleMap: Record<string, string> = {
+    '/': 'common.appName',
+    '/record': 'nav.record',
+    '/statistics': 'nav.statistics',
+    '/budget': 'nav.budget',
+    '/settings': 'nav.settings',
+    '/login': 'common.login'
+  }
+  
+  const key = titleMap[route.path] || 'common.appName'
+  return key
 })
 
 const userInitial = computed(() => {
